@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:0f893aeaa870f517664d80ac7be7fa85c4b04ce984ae3eeb0dac7687c8fd34d1"
+  name = "github.com/araddon/dateparse"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "00e168d34895ce6682b546bc3914bcea611a6dbd"
+
+[[projects]]
   digest = "1:76dc72490af7174349349838f2fe118996381b31ea83243812a97e5a0fd5ed55"
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
@@ -88,6 +96,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/araddon/dateparse",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
   ]
