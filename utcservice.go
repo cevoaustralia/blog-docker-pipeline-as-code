@@ -38,13 +38,13 @@ func parse(c echo.Context) error {
 
 func parseDate(input, tz string) (time.Time, error) {
 	if "" == input {
-		return time.Now(), echo.NewHTTPError(http.StatusBadRequest, "Missing query param: date")
+		return time.Unix(0, 0), echo.NewHTTPError(http.StatusBadRequest, "Missing query param: date")
 	}
 
 	if "" != tz {
 		loc, err := time.LoadLocation(tz)
 		if err != nil {
-			return time.Now(), echo.NewHTTPError(http.StatusBadRequest, "Invalid timezone: "+tz)
+			return time.Unix(0, 0), echo.NewHTTPError(http.StatusBadRequest, "Invalid timezone: "+tz)
 		}
 		time.Local = loc
 	} else {
@@ -53,7 +53,7 @@ func parseDate(input, tz string) (time.Time, error) {
 
 	t, err := dateparse.ParseLocal(input)
 	if err != nil {
-		return time.Now(), echo.NewHTTPError(http.StatusInternalServerError, "Could not parse date")
+		return time.Unix(0, 0), echo.NewHTTPError(http.StatusInternalServerError, "Could not parse date")
 	}
 
 	return t, nil
