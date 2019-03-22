@@ -1,19 +1,16 @@
 # start from an upstream, maintained build image for Go
 # This time, we're giving it a friendly name for use later in the pipeline
-FROM golang:1.10 AS build
+FROM golang:1.12 AS build
 
-# Install dep (for managing versioned go package dependencies)
-RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+ARG VERSION=0.1
 
 # create the location for our code, and go there
-RUN mkdir -p /go/src/github.com/cevoaustralia/utcservice
-WORKDIR /go/src/github.com/cevoaustralia/utcservice
+RUN mkdir /build
+WORKDIR /build
 
-# Copy our code into the work directory
-ADD *.go Gopkg* /go/src/github.com/cevoaustralia/utcservice/
-
-# Make sure we have the correct versioned dependencies installed
-RUN dep ensure
+# Fetch the appropriate version
+RUN curl -L -s https://github.com/cevoaustralia/utcservice/archive/${VERSION}.tar.gz | tar zxvf -
+WORKDIR /build/utcservice-${VERSION}
 
 # Actually run the tests, and then build a statically-linked binary if the tests passed
 RUN go test && \
@@ -22,8 +19,10 @@ RUN go test && \
 # This is the last stage -- starting from the most minimal possible image
 FROM scratch
 
+ARG VERSION=0.1
+
 # We copy in the built binary from the previous stage
-COPY --from=build /go/src/github.com/cevoaustralia/utcservice/utcservice /
+COPY --from=build /build/utcservice-${VERSION}/utcservice /
 
 # Add the static assets from the pre-built image
 COPY --from=static-assets:latest /clock.png /
