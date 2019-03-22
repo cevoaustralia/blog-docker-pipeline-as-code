@@ -1,18 +1,15 @@
 # start from an upstream, maintained build image for Go
-FROM golang:1.10
+FROM golang:1.12
 
-# Install dep (for managing versioned go package dependencies)
-RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+ARG VERSION=0.1
 
 # create the location for our code, and go there
-RUN mkdir -p /go/src/github.com/cevoaustralia/utcservice
-WORKDIR /go/src/github.com/cevoaustralia/utcservice
+RUN mkdir /build
+WORKDIR /build
 
-# Copy our code into the work directory
-ADD *.go Gopkg* /go/src/github.com/cevoaustralia/utcservice/
-
-# Make sure we have the correct versioned dependencies installed
-RUN dep ensure
+# Fetch the appropriate version
+RUN curl -L -s https://github.com/cevoaustralia/utcservice/archive/${VERSION}.tar.gz | tar zxvf -
+WORKDIR /build/utcservice-${VERSION}
 
 # Actually run the tests, and then build the binary if the tests passed
 RUN go test && go build
