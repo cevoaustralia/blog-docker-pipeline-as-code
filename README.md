@@ -24,3 +24,5 @@ It contains a number of subdirectories:
 
 1. An "04-complete" directory, which demonstrates combining multiple Docker images
    into a single, minimised final image
+
+It uses https://github.com/cevoaustralia/utcservice as a simple tiny microservice example
