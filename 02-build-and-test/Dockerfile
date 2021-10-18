@@ -1,5 +1,5 @@
 # start from an upstream, maintained build image for Go
-FROM golang:1.12
+FROM golang:bullseye
 
 ARG VERSION=0.1
 
