@@ -1,6 +1,7 @@
 # Blog post: Docker pipeline as code
 
-This repository goes alongside the blog post [Docker multistage builds: a minimal pipeline-as-code](https://cevo.com.au/post/2018-10-29-docker-a-minimal-pipeline-as-code/)
+This repository goes alongside the blog post
+[Docker multistage builds: a minimal pipeline-as-code](https://cevo.com.au/post/2018-10-29-docker-a-minimal-pipeline-as-code/)
 
 It contains a number of subdirectories:
 
